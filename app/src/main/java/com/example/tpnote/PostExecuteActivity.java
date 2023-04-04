@@ -1,4 +1,4 @@
-package edu.frallo.myapplication;
+package com.example.tpnote;
 
 import java.util.List;
 
