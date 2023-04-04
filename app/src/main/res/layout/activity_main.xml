@@ -63,6 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/language_spinner"
         android:layout_centerHorizontal="true"
-        android:text="Go"/>
+        android:layout_marginTop="20sp"
+        android:text="CATCH'EM ALL"/>
 
 </RelativeLayout>
