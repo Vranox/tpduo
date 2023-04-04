@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">TP note</string>
+   <string-array name="language_options">
+        <item>english</item>
+        <item>japanese</item>
+       <item>chinese</item>
+       <item>french</item>
+    </string-array>
+    <string name="go_button">Go</string>
 </resources>
