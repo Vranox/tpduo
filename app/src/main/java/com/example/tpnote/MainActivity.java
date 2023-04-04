@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements PostExecuteActivity<Pokemon> {
+public class MainActivity extends AppCompatActivity implements edu.frallo.myapplication.PostExecuteActivity<Pokemon> {
     private final String TAG = "frallo "+getClass().getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
