@@ -13,6 +13,7 @@ import android.widget.Spinner;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements edu.frallo.myapplication.PostExecuteActivity<Pokemon> {
@@ -45,7 +46,9 @@ public class MainActivity extends AppCompatActivity implements edu.frallo.myappl
             String url = "https://raw.githubusercontent.com/fanzeyi/pokemon.json/17d33dc111ffcc12b016d6485152aa3b1939c214/pokedex.json";
             new HttpAsyncGet<>(url, Pokemon.class, this, new ProgressDialog(clic.getContext()) );
             Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-            intent.putExtra("pokemonList", (Serializable) itemList);
+
+            intent.putExtra("pokemon0", (Serializable) itemList.get(0));
+
             intent.putExtra("language", language);
             startActivity(intent);
         });

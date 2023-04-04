@@ -2,6 +2,7 @@ package com.example.tpnote;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,18 +29,20 @@ public class ListPokemonFragment extends Fragment {
     @SuppressLint("MissingInflatedId")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_pokemon_fragment, container, false);
-        // Obtenez une référence à la ListView
         ListView listView = (ListView) view.findViewById(R.id.list_view);
 
+        Intent intent = getActivity().getIntent();
+
+
+        String s = intent.getStringExtra("language");
 
         List<String> dataList = new ArrayList<>();
-        dataList.add("Element 1");
-        dataList.add("Element 2");
-        dataList.add("Element 3");
+        dataList.add(s);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, dataList);
 
         listView.setAdapter(adapter);
 
-        return view; }
+        return view;
+    }
 }
