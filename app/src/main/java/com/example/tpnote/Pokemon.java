@@ -1,72 +1,115 @@
 package com.example.tpnote;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 /**
- * Represents a Pokémon with its attributes and behaviors.
+ *  get Pokemons from json data: https://raw.githubusercontent.com/fanzeyi/pokemon.json/17d33dc111ffcc12b016d6485152aa3b1939c214/pokedex.json
+ *
+ *  --> let's use jackson libbrairy!
+ *          - no constructor in this Pokemon class because 'jackson' librairy is used to parse json -> Pokemon
+ *          - tuto to use jackson lib: <a href="https://stackoverflow.com/questions/60750796/how-to-convert-this-json-to-object-in-java-android">...</a>
+ *          - add in Gradle
+ *              implementation 'com.squareup.retrofit2:converter-jackson:2.7.2'
+ *              implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.3'
+ *              implementation 'com.fasterxml.jackson.core:jackson-core:2.10.3'
+ *              implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.3'
+ *
+ *  there is no picture in data json but there are some at
+ *          - sprites : <a href="https://github.com/fanzeyi/pokemon.json/tree/master/sprites">...</a>
+ *          - images : <a href="https://github.com/fanzeyi/pokemon.json/tree/master/images">...</a>
+ *   --> let's use Picaso libbrairy to inflate pictures
+ *          add in Gradle implementation 'com.squareup.picasso:picasso:2.71828'
+ *
+ * @author Frédéric RALLO - March 2023
+ * @author
  */
+
 public class Pokemon {
     public static String language;
+    @JsonProperty("id")
     private int id;
-    private Map<String, String> name; //depends on settings language
+    @JsonProperty("name")
+    private Map<String, String> name; //depends of settings language
+    @JsonProperty("type")
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)
     private final List<Types> type = new ArrayList<>();
-    private Map<String, Integer> baseStats;  //json name is "base"
+    static List<Pokemon> completeList = new ArrayList<>();
+    @JsonProperty("base")
+    private Map<String, Integer> base;  //json name is base
     private String pictureURL;
 
-    //TODO: Add constructor and setters
+
+    //TODO some methods
+
 
     /**
-     * Calculates the rank of the Pokémon based on its stats.
-     *
-     * @return the rank value
-     */
-    public Integer getRank() {
-        return 4 * baseStats.get("Speed") + 3 * baseStats.get("Attack") + 2 * baseStats.get("Defense") + baseStats.get("HP");
+     * the best pokemon are those with the highest rank value
+     **/
+    public Integer getRank(){
+        return 4*base.get("Speed") + 3*base.get("Attack") + 2*base.get("Defense")  + base.get("HP");
     }
 
-    /**
-     * Returns the name of the Pokémon in the current language.
-     *
-     * @return the name
-     */
     public String getName() {
-        return name.get(language);
+        return name.get(MainActivity.language);
     }
+
 
     @Override
     public String toString() {
-        return "Pokemon{ id=" + id + ", name=" + getName() + ", type=" + type + ", baseStats=" + baseStats + '}';
+        return "Pokemon{ id=" + id + ", name=" + getName() + ", type=" + type + ", features=" + base + '}';
     }
 
     /**
-     * Changes the speed of all NORMAL Type Pokémon by a certain amount.
-     *
-     * @param boost the amount to boost the speed by
+     * change speed of all NORMAL Type Pokemon
+     * @param boost
      */
     public static void boost(int boost) {
-        for (Pokemon pokemon : completeList) {
-            if (pokemon.type.contains(Types.NORMAL)) {
-                pokemon.baseStats.put("Speed", pokemon.baseStats.get("Speed") + boost);
+        completeList.forEach(pokemon -> {
+            if(pokemon.type.contains(Types.NORMAL)) {
+                pokemon.base.put(Stats.SPEED.toString(), pokemon.base.get(Stats.SPEED.toString()) + boost);
             }
-        }
-    }
-
-    // Static list of all Pokemon objects
-    private static List<Pokemon> completeList = new ArrayList<>();
-
-    /**
-     * Sets the complete list of all Pokemon objects.
-     *
-     * @param pokemonList the list of Pokemon objects
-     */
-    public static void setCompleteList(List<Pokemon> pokemonList) {
-        completeList = pokemonList;
+        });
     }
 }
 
-enum Types {
+
+
+enum Stats {
+    HP(0),
+    ATTACK(0),
+    DEFENSE(0),
+    SP_ATTACK(0),
+    SP_DEFENSE(0),
+    SPEED(0);
+    private int value;
+
+    Stats(int i) {
+        this.value = i;
+    }
+
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+    void Bases(int value) {
+        this.value=value;
+    }
+}
+
+
+enum Types{
     NORMAL,
     FIGHTING,
     FLYING,
@@ -87,11 +130,3 @@ enum Types {
     FAIRY
 }
 
-enum Stats {
-    HP,
-    ATTACK,
-    DEFENSE,
-    SP_ATTACK,
-    SP_DEFENSE,
-    SPEED
-}
