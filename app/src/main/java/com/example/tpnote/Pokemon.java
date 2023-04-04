@@ -1,5 +1,4 @@
 package com.example.tpnote;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,33 +23,53 @@ import java.util.Map;
  *          add in Gradle implementation 'com.squareup.picasso:picasso:2.71828'
  *
  * @author Frédéric RALLO - March 2023
+ * @author
  */
 public class Pokemon {
-    private final String TAG = "frallo "+getClass().getSimpleName();
-
+    public static String language;
     private int id;
     private Map<String, String> name; //depends of settings language
     private final List<Types> type = new ArrayList<>();
-    private Map<String, Integer> features;  //json name is base
+    private Map<String, Integer> base;  //json name is base
     private String pictureURL;
     
     
     //TODO some methods
-    
-    public String getName() { 
-    //to be changed
-    	return null;
-    }  
-   
+
+
+    /**
+    * the best pokemon are those with the highest rank value
+    **/
+    public Integer getRank(){
+        return 4*base.get("Speed") + 3*base.get("Attack") + 2*base.get("Defense")  + base.get("HP");
+    }
+
+    public String getName() {
+        return null; //TODO: return name.get(MainActivity.language);
+    }
+
+
     @Override
     public String toString() {
-        return "Pokemon{ id=" + id + ", name=" + getName() + ", type=" + type + ", features=" + features + '}';
+         return "Pokemon{ id=" + id + ", name=" + getName() + ", type=" + type + ", features=" + base + '}';
+    }
+    
+    /**
+     * change speed of all NORMAL Type Pokemon
+     * @param boost
+     */
+    public static void boost(int boost) {
+        completeList.forEach( pokemon -> {
+            if(pokemon.type.contains(Types.NORMAL)) {
+                pokemon.base.put(Stats.Speed.toString(), pokemon.base.get(Stats.Speed.toString()) + boost);
+            }
+        });
     }
 }
 
 
 
-enum Features {
+enum Stats {
     HP(0),
     ATTACK(0),
     DEFENSE(0),
@@ -67,7 +86,7 @@ enum Features {
     public void setValue(int value) {
         this.value = value;
     }
-    Features(int value) {
+    Bases(int value) {
         this.value=value;
     }
 }
