@@ -86,7 +86,7 @@ enum Stats {
     public void setValue(int value) {
         this.value = value;
     }
-    Bases(int value) {
+    void Bases(int value) {
         this.value=value;
     }
 }

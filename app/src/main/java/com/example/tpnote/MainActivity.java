@@ -1,6 +1,7 @@
 package com.example.tpnote;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,8 +9,9 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements PostExecuteActivity<Pokemon> {
+public class MainActivity extends AppCompatActivity implements edu.frallo.myapplication.PostExecuteActivity<Pokemon> {
     private final String TAG = "frallo "+getClass().getSimpleName();
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

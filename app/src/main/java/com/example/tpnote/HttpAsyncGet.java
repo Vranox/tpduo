@@ -29,7 +29,7 @@ public class HttpAsyncGet<T>{
     private final HttpHandler webService;
 
 
-    public HttpAsyncGet(String url, Class<T> clazz, PostExecuteActivity postExecuteActivity, ProgressDialog progressDialog) {
+    public HttpAsyncGet(String url, Class<T> clazz, edu.frallo.myapplication.PostExecuteActivity postExecuteActivity, ProgressDialog progressDialog) {
         super();
         webService = new HttpHandler();
         this.clazz = clazz;
