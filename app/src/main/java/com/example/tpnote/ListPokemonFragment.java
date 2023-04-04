@@ -29,12 +29,15 @@ public class ListPokemonFragment extends Fragment {
         View view = inflater.inflate(R.layout.list_pokemon_fragment, container, false);
         // Obtenez une référence à la ListView
         ListView listView = (ListView) view.findViewById(R.id.list_view);
-
+        List<Pokemon> pokemonList = PokemonListHolder.getInstance().getPokemonList();
+        for (Pokemon pokemon : pokemonList) {
+            Log.d(TAG, pokemon.getName());
+        }
 
         List<String> dataList = new ArrayList<>();
-        dataList.add("Element 1");
-        dataList.add("Element 2");
-        dataList.add("Element 3");
+        for(Pokemon pokemon : pokemonList) {
+            dataList.add(pokemon.getName());
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, dataList);
 

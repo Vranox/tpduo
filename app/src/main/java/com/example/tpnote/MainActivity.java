@@ -44,19 +44,19 @@ public class MainActivity extends AppCompatActivity implements edu.frallo.myappl
         findViewById(R.id.go).setOnClickListener( clic -> {
             String url = "https://raw.githubusercontent.com/fanzeyi/pokemon.json/17d33dc111ffcc12b016d6485152aa3b1939c214/pokedex.json";
             new HttpAsyncGet<>(url, Pokemon.class, this, new ProgressDialog(clic.getContext()) );
-            Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-            intent.putExtra("pokemonList", (Serializable) itemList);
-            intent.putExtra("language", language);
-            startActivity(intent);
         });
     }
 
 
     @Override
     public void onPostExecutePokemons(List<Pokemon> itemList) {
+        PokemonListHolder.getInstance().setPokemonList(itemList);
         this.itemList = itemList;
         Pokemon pokemonFirst = itemList.get(0);
         Log.d(TAG,"First pokemon = " + pokemonFirst.toString());
         Log.d(TAG, language);
+        Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+        intent.putExtra("language", language);
+        startActivity(intent);
     }
 }
